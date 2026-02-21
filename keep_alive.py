@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from threading import Thread
 
@@ -8,8 +9,9 @@ def home():
     return "Bot Mas Amba sedang online (Server Web Aktif)!"
 
 def run():
-    # Gunakan port 8080 yang biasanya dipakai layanan hosting gratis (seperti Render.com)
-    app.run(host='0.0.0.0', port=8080)
+    # Render memberikan port dinamis ke variabel PORT, fallback ke 8080
+    port = int(os.environ.get("PORT", 8080))
+    app.run(host='0.0.0.0', port=port)
 
 def keep_alive():
     # Menjalankan server web Flask dalam thread terpisah agar tidak memblokir Bot Discord
