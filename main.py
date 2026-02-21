@@ -375,6 +375,35 @@ async def cmd_ambatobat(interaction: discord.Interaction):
     else:
         await interaction.followup.send(fallback_msg)
 
+# Perintah Slash /amba
+@bot.tree.command(name="amba", description="Minta Mas Amba buatkan sesuatu (teks/jawaban AI)")
+async def cmd_amba(interaction: discord.Interaction, prompt_user: str):
+    await interaction.response.defer()
+    
+    if model:
+        try:
+            # Instruksi untuk AI: Berperan sebagai Mas Amba dan jawab prompt user, tapi berikan HANYA teks sesuai permintaan.
+            prompt_ai = (
+                f"Kamu adalah Mas Amba. Seseorang memintamu: '{prompt_user}'.\n"
+                f"Berikan jawabanmu HANYA berupa teks/kata-kata sesuai permintaan tanpa basa-basi tambahan seperti 'Tentu, ini dia'."
+            )
+            response = await asyncio.to_thread(
+                model.generate_content, 
+                prompt_ai,
+                request_options={"timeout": 30.0}
+            )
+            
+            hasil = response.text
+            if len(hasil) > 1999:
+                hasil = hasil[:1996] + "..."
+            
+            await interaction.followup.send(hasil)
+        except Exception as e:
+            print(f"Error dari Gemini pada command /amba: {e}")
+            await interaction.followup.send("Aduh Mas, Mas Amba lagi pusing nih, kepalanya sakit. Coba lagi nanti ya! 🥺")
+    else:
+        await interaction.followup.send("Mas Amba nggak bisa mikir karena API Key-nya belum dipasang nih, Mas. 🥺")
+
 if __name__ == '__main__':
     if not DISCORD_TOKEN:
         print("TOLONG SET 'DISCORD_TOKEN' di file .env terlebih dahulu!")
