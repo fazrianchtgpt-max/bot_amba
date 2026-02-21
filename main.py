@@ -8,6 +8,7 @@ import google.generativeai as genai
 import datetime
 import asyncio
 import fallback_templates
+import keep_alive
 
 # Load environment variables
 load_dotenv()
@@ -378,4 +379,5 @@ if __name__ == '__main__':
     if not DISCORD_TOKEN:
         print("TOLONG SET 'DISCORD_TOKEN' di file .env terlebih dahulu!")
     else:
+        keep_alive.keep_alive()  # Mengaktifkan Flask server agar bot bisa online 24 jam lewat UptimeRobot
         bot.run(DISCORD_TOKEN)
