@@ -228,8 +228,12 @@ async def on_message(message):
                 await message.reply(ceramah)
             except Exception as e:
                 print(f"Error dari Gemini API: {e}")
-                # Kirim fallback
-                await message.reply(fallback_msg)
+                error_msg = str(e).lower()
+                if "429" in error_msg or "quota" in error_msg or "exhausted" in error_msg:
+                    await message.reply("Aduh Mas, kuota/limit API Key Gemini-nya udah habis nih. Coba cek atau ganti API Key-nya ya! 🥺")
+                else:
+                    # Kirim fallback
+                    await message.reply(fallback_msg)
         else:
             await message.reply(fallback_msg)
             
@@ -337,7 +341,11 @@ async def cmd_jomok_target(interaction: discord.Interaction, target: discord.Mem
             await interaction.followup.send(response.text[:1999])
         except Exception as e:
             print(f"Error dari Gemini: {e}")
-            await interaction.followup.send(fallback_msg)
+            error_msg = str(e).lower()
+            if "429" in error_msg or "quota" in error_msg or "exhausted" in error_msg:
+                await interaction.followup.send("Aduh Mas, kuota/limit API Key Gemini-nya udah habis nih. Coba cek atau ganti API Key-nya ya! 🥺")
+            else:
+                await interaction.followup.send(fallback_msg)
     else:
         await interaction.followup.send(fallback_msg)
 
@@ -371,7 +379,11 @@ async def cmd_ambatobat(interaction: discord.Interaction):
             await interaction.followup.send(hasil)
         except Exception as e:
             print(f"Error dari Gemini: {e}")
-            await interaction.followup.send(fallback_msg)
+            error_msg = str(e).lower()
+            if "429" in error_msg or "quota" in error_msg or "exhausted" in error_msg:
+                await interaction.followup.send("Aduh Mas, kuota/limit API Key Gemini-nya udah habis nih. Coba cek atau ganti API Key-nya ya! 🥺")
+            else:
+                await interaction.followup.send(fallback_msg)
     else:
         await interaction.followup.send(fallback_msg)
 
@@ -400,7 +412,11 @@ async def cmd_amba(interaction: discord.Interaction, prompt_user: str):
             await interaction.followup.send(hasil)
         except Exception as e:
             print(f"Error dari Gemini pada command /amba: {e}")
-            await interaction.followup.send("Aduh Mas, Mas Amba lagi pusing nih, kepalanya sakit. Coba lagi nanti ya! 🥺")
+            error_msg = str(e).lower()
+            if "429" in error_msg or "quota" in error_msg or "exhausted" in error_msg:
+                await interaction.followup.send("Aduh Mas, kuota/limit API Key Gemini-nya udah habis nih. Coba cek atau ganti API Key-nya ya! 🥺")
+            else:
+                await interaction.followup.send("Aduh Mas, Mas Amba lagi pusing nih, kepalanya sakit. Coba lagi nanti ya! 🥺")
     else:
         await interaction.followup.send("Mas Amba nggak bisa mikir karena API Key-nya belum dipasang nih, Mas. 🥺")
 
