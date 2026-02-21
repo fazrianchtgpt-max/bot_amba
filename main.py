@@ -18,7 +18,7 @@ GEMINI_API_KEY = os.getenv('GEMINI_API_KEY')
 # Initialize Google Gemini AI if API Key exists
 if GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
-    model = genai.GenerativeModel('gemini-2.5-flash')
+    model = genai.GenerativeModel('gemma-3-27b-it')
 else:
     model = None
 
@@ -396,7 +396,7 @@ async def cmd_amba(interaction: discord.Interaction, prompt_user: str):
         try:
             # Instruksi untuk AI: Berperan sebagai Mas Amba dan jawab prompt user, tapi berikan HANYA teks sesuai permintaan.
             prompt_ai = (
-                f"Kamu adalah Mas Amba. Seseorang memintamu: '{prompt_user}'.\n"
+                f"Kamu adalah Mas Amba sang pria romantis. Seseorang memintamu: '{prompt_user}'.\n"
                 f"Berikan jawabanmu HANYA berupa teks/kata-kata sesuai permintaan tanpa basa-basi tambahan seperti 'Tentu, ini dia'."
             )
             response = await asyncio.to_thread(
