@@ -1,0 +1,14 @@
+# Environments
+.env
+
+# Dependencies
+venv/
+__pycache__/
+*.pyc
+
+# Database
+amba.db*
+
+# IDE/OS
+.vscode/
+.DS_Store
